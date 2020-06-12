@@ -148,7 +148,7 @@ Transform:
   m_GameObject: {fileID: 257754765}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 0}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0}
   m_Children: []
   m_Father: {fileID: 733923910}
   m_RootOrder: 0
@@ -329,10 +329,11 @@ MonoBehaviour:
   numberOfSlots: 9
   height: 3
   difficulty: 1
+  planetRadius: 0.3
+  planetAtmosphereRadius: 2
+  blockScale: 0.23
   shipSpeed: 15
-  planetRadius: 0.58
-  planetAtmosphereRadius: 2.22
-  blockScale: 0.2
+  startAngle: 215
   randomObjects: 1
   buildingsToWin: 0
   objectsTypes: 

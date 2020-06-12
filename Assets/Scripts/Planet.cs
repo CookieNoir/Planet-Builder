@@ -8,10 +8,14 @@ public class Planet : MonoBehaviour
     public NumberOfSlots numberOfSlots = NumberOfSlots._6;
     [Range(1, 5)] public int height = 1;
     [Range(1, 3)] public int difficulty = 1;
-    [Range(15f, 180f)] public float shipSpeed = 60f;
     public float planetRadius = 1f;
     public float planetAtmosphereRadius = 1f;
     public float blockScale = 0.5f;
+
+    [Header("Ship Properties")]
+    [Range(15f, 180f)] public float shipSpeed = 60f;
+    [Range(0f, 360f)] public float startAngle = 0f;
+    public bool isClockwise = false;
 
     [Header("Generation")]
     public bool randomObjects;
@@ -93,7 +97,11 @@ public class Planet : MonoBehaviour
         {
             for (int i = 0; i < _numberOfSlots; ++i)
             {
-                if (objectsTypes[i] != -1 && isObstacle[i]) setFixedObject(obstacles, i, objectsTypes[i]);
+                if (objectsTypes[i] != -1 && isObstacle[i])
+                {
+                    _buildingsHeight[i] = -1;
+                    setFixedObject(obstacles, i, objectsTypes[i]);
+                }
             }
         }
     }
@@ -163,13 +171,13 @@ public class Planet : MonoBehaviour
     private BlockInfo addBlock(int slot)
     {
         if (_buildingsHeight[slot] <= -1 || _buildingsHeight[slot] >= height)
-            return new BlockInfo(false, Vector3.zero, Quaternion.identity);
+            return new BlockInfo(false, Vector3.zero, Quaternion.identity, 0f);
         else
         {
             _buildingsHeight[slot]++;
             _blocksPlaced++;
             if (_buildingsHeight[slot] == height) _buildingsComplete++;
-            return new BlockInfo(false, PolarSystem.Position(slot * _slotAngle, planetRadius + (_buildingsHeight[slot] - 1) * blockScale, transform.position), Quaternion.Euler(0, 0, slot * _slotAngle - 90f));
+            return new BlockInfo(true, PolarSystem.Position(slot * _slotAngle, planetRadius + (_buildingsHeight[slot] - 1) * blockScale, transform.position), Quaternion.Euler(0, 0, slot * _slotAngle - 90f), blockScale);
         }
     }
 
@@ -193,10 +201,14 @@ public class Planet : MonoBehaviour
         }
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position, transform.position + new Vector3(planetRadius, 0, 0));
+        Gizmos.color = Color.cyan;
         if (planetAtmosphereRadius > 5 * blockScale + planetRadius)
         {
-            Gizmos.color = Color.cyan;
             Gizmos.DrawLine(transform.position + new Vector3(planetRadius + 5 * blockScale, 0, 0), transform.position + new Vector3(planetAtmosphereRadius, 0, 0));
+        }
+        if (startAngle > 1f && startAngle < 359f)
+        {
+            Gizmos.DrawLine(transform.position + PolarSystem.Position(startAngle, planetRadius, transform.position), transform.position + PolarSystem.Position(startAngle, planetAtmosphereRadius, transform.position));
         }
     }
 
