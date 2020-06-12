@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Planet : MonoBehaviour
@@ -14,7 +13,13 @@ public class Planet : MonoBehaviour
     public float planetAtmosphereRadius = 1f;
     public float blockScale = 0.5f;
 
-    [Header("Planet Components")]
+    [Header("Generation")]
+    public bool randomObjects;
+    public int buildingsToWin;
+
+    public int[] objectsTypes;
+    public bool[] isObstacle;
+
     public GameObject[] props;
     public GameObject[] obstacles;
 
@@ -73,38 +78,71 @@ public class Planet : MonoBehaviour
 
     private void setObstacles()
     {
-        _obstaclesAmount = (_numberOfSlots - 1) / 4 * difficulty + ((_numberOfSlots - 1) % 4) / 2 * (difficulty - 1);
-        for (int i = 0; i < _obstaclesAmount; ++i)
+        if (randomObjects)
         {
-            int _pos = Random.Range(0, _numberOfSlots);
-            while (_buildingsHeight[_pos] == -1) _pos = (_pos + 1) % _numberOfSlots;
-            _buildingsHeight[_pos] = -1;
-            setObject(obstacles, _pos);
+            _obstaclesAmount = (_numberOfSlots - 1) / 4 * difficulty + ((_numberOfSlots - 1) % 4) / 2 * (difficulty - 1);
+            for (int i = 0; i < _obstaclesAmount; ++i)
+            {
+                int _pos = Random.Range(0, _numberOfSlots);
+                while (_buildingsHeight[_pos] == -1) _pos = (_pos + 1) % _numberOfSlots;
+                _buildingsHeight[_pos] = -1;
+                setRandomObject(obstacles, _pos);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < _numberOfSlots; ++i)
+            {
+                if (objectsTypes[i] != -1 && isObstacle[i]) setFixedObject(obstacles, i, objectsTypes[i]);
+            }
         }
     }
 
     private void setProps()
     {
-        int _propsAmount = _numberOfSlots - _obstaclesAmount - Random.Range(0, 3);
-        for (int i = 0; i < _propsAmount; ++i)
+        if (randomObjects)
         {
-            int _pos = Random.Range(0, _numberOfSlots);
-            while (_buildingsHeight[_pos] == -1) _pos = (_pos + 1) % _numberOfSlots;
-            setObject(props, _pos);
+            int _propsAmount = _numberOfSlots - _obstaclesAmount - Random.Range(0, 3);
+            for (int i = 0; i < _propsAmount; ++i)
+            {
+                int _pos = Random.Range(0, _numberOfSlots);
+                while (_buildingsHeight[_pos] == -1) _pos = (_pos + 1) % _numberOfSlots;
+                setRandomObject(props, _pos);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < _numberOfSlots; ++i)
+            {
+                if (objectsTypes[i] != -1 && !isObstacle[i]) setFixedObject(props, i, objectsTypes[i]);
+            }
         }
     }
 
     private void setTarget()
     {
-        _buildingsToWin = (_numberOfSlots - _obstaclesAmount) / 3 + 1;
+        if (randomObjects) _buildingsToWin = (_numberOfSlots - _obstaclesAmount) / 3 + 1;
+        else _buildingsToWin = buildingsToWin;
     }
 
-    private void setObject(GameObject[] objects, int slot)
+    private void setRandomObject(GameObject[] objects, int slot)
     {
         if (objects.Length > 0)
         {
             int _type = Random.Range(0, objects.Length);
             GameObject obstacle = Instantiate(objects[_type], Vector3.zero, Quaternion.identity);
+            obstacle.transform.localScale = new Vector3(blockScale, blockScale, blockScale);
+            obstacle.transform.SetParent(gameObject.transform);
+            obstacle.transform.localRotation = Quaternion.Euler(0, 0, slot * _slotAngle - 90f);
+            obstacle.transform.position = PolarSystem.Position(slot * _slotAngle, planetRadius, transform.position);
+        }
+    }
+
+    private void setFixedObject(GameObject[] objects, int slot, int type)
+    {
+        if (objects.Length > 0)
+        {
+            GameObject obstacle = Instantiate(objects[type], Vector3.zero, Quaternion.identity);
             obstacle.transform.localScale = new Vector3(blockScale, blockScale, blockScale);
             obstacle.transform.SetParent(gameObject.transform);
             obstacle.transform.localRotation = Quaternion.Euler(0, 0, slot * _slotAngle - 90f);
@@ -135,6 +173,11 @@ public class Planet : MonoBehaviour
         }
     }
 
+    public void addBlockToBlocksList(GameObject block)
+    {
+        _blocks.Add(block);
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
@@ -154,6 +197,53 @@ public class Planet : MonoBehaviour
         {
             Gizmos.color = Color.cyan;
             Gizmos.DrawLine(transform.position + new Vector3(planetRadius + 5 * blockScale, 0, 0), transform.position + new Vector3(planetAtmosphereRadius, 0, 0));
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (!randomObjects)
+            for (int i = 0; i < _numberOfSlots; ++i)
+            {
+                if (objectsTypes[i] == -1) Gizmos.color = Color.green;
+                else
+                {
+                    if (isObstacle[i]) Gizmos.color = Color.red;
+                    else Gizmos.color = Color.yellow;
+                }
+                Gizmos.DrawWireSphere(PolarSystem.Position(i * _slotAngle, planetRadius + 0.5f * blockScale, transform.position), 0.5f * blockScale);
+            }
+        else
+        {
+            Gizmos.color = Color.yellow;
+            for (int i = 0; i < _numberOfSlots; ++i)
+            {
+                Gizmos.DrawWireSphere(PolarSystem.Position(i * _slotAngle, planetRadius + 0.5f * blockScale, transform.position), 0.5f * blockScale);
+            }
+        }
+    }
+
+    private void OnValidate()
+    {
+        _numberOfSlots = (int)numberOfSlots;
+        _slotAngle = 360f / _numberOfSlots;
+        _slotAngleHalf = _slotAngle / 2;
+        if (!randomObjects)
+        {
+            if (objectsTypes.Length != _numberOfSlots)
+            {
+                objectsTypes = new int[_numberOfSlots];
+                for (int i = 0; i < _numberOfSlots; ++i)
+                {
+                    objectsTypes[i] = -1;
+                }
+            }
+            if (isObstacle.Length != _numberOfSlots) isObstacle = new bool[_numberOfSlots];
+        }
+        else
+        {
+            objectsTypes = null;
+            isObstacle = null;
         }
     }
 }
