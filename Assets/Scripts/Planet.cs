@@ -34,7 +34,7 @@ public class Planet : MonoBehaviour
     private int _blocksPlaced;
 
     private int _buildingsToWin;
-    private int _buildingsComplete;
+    private int _buildingsCompleted;
     private int _obstaclesAmount;
 
     private float _slotAngle;
@@ -51,7 +51,7 @@ public class Planet : MonoBehaviour
         _slotAngle = 360f / _numberOfSlots;
         _slotAngleHalf = _slotAngle / 2;
         _blocksPlaced = 0;
-        _buildingsComplete = 0;
+        _buildingsCompleted = 0;
 
         setObstacles();
         setProps();
@@ -68,7 +68,7 @@ public class Planet : MonoBehaviour
             Destroy(_blocks[i]);
         }
         _blocksPlaced = 0;
-        _buildingsComplete = 0;
+        _buildingsCompleted = 0;
         for (int i = 0; i < _numberOfSlots; ++i)
         {
             if (_buildingsHeight[i] > 0) _buildingsHeight[i] = 0;
@@ -171,12 +171,15 @@ public class Planet : MonoBehaviour
     private BlockInfo addBlock(int slot)
     {
         if (_buildingsHeight[slot] <= -1 || _buildingsHeight[slot] >= height)
-            return new BlockInfo(false, Vector3.zero, Quaternion.identity, 0f);
+        {
+            if (_buildingsHeight[slot] <= -1) return new BlockInfo(false, PolarSystem.Position(slot * _slotAngle, planetRadius, transform.position), Quaternion.Euler(0, 0, slot * _slotAngle - 90f), blockScale);
+            else return new BlockInfo(false, PolarSystem.Position(slot * _slotAngle, planetRadius + height * blockScale, transform.position), Quaternion.Euler(0, 0, slot * _slotAngle - 90f), blockScale);
+        }
         else
         {
             _buildingsHeight[slot]++;
             _blocksPlaced++;
-            if (_buildingsHeight[slot] == height) _buildingsComplete++;
+            if (_buildingsHeight[slot] == height) _buildingsCompleted++;
             return new BlockInfo(true, PolarSystem.Position(slot * _slotAngle, planetRadius + (_buildingsHeight[slot] - 1) * blockScale, transform.position), Quaternion.Euler(0, 0, slot * _slotAngle - 90f), blockScale);
         }
     }
@@ -184,6 +187,15 @@ public class Planet : MonoBehaviour
     public void addBlockToBlocksList(GameObject block)
     {
         _blocks.Add(block);
+    }
+
+    public bool IsCompleted()
+    {
+        if (_buildingsCompleted == _buildingsToWin)
+        {
+            return true;
+        }
+        else return false;
     }
 
     private void OnDrawGizmos()

@@ -332,8 +332,9 @@ MonoBehaviour:
   planetRadius: 0.3
   planetAtmosphereRadius: 2
   blockScale: 0.23
-  shipSpeed: 15
-  startAngle: 215
+  shipSpeed: 60
+  startAngle: 285
+  isClockwise: 0
   randomObjects: 1
   buildingsToWin: 0
   objectsTypes: 
