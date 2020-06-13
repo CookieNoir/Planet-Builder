@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class GameController : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class GameController : MonoBehaviour
     public GameObject[] planets;
 
     public Vector2 offset;
+    public float flightTime = 3f;
 
     public static GameController instance;
 
@@ -16,13 +18,20 @@ public class GameController : MonoBehaviour
     private bool _levelCompleted;
     private int _completedLevelsCount; // Количество завершенных уровней в текущей игровой сессии
     private Vector3 _newPlanetPosition;
+    private IEnumerator _moveToAnotherPlanet;
+    private float _z;
 
     void Start()
     {
+        instance = this as GameController;
         _completedLevelsCount = 0;
         _newPlanetPosition = Vector3.zero;
-        instance = this as GameController;
-        instance.setNextPlanet();
+        setNextPlanet();
+        _moveToAnotherPlanet = moveToAnotherPlanet();
+        _z = cameraTransform.position.z;
+        shipController.SetPlanet(_planet);
+        // Прилет
+        cameraTransform.position = _planet.transform.position + new Vector3(0, 0, _z);
     }
 
     public static void CheckLevel()
@@ -43,7 +52,30 @@ public class GameController : MonoBehaviour
     {
         level++;
         _completedLevelsCount++;
+
+        // Корабль движется к безопасному углу, вылетает за пределы экрана
+
         setNextPlanet();
+
+        StopCoroutine(_moveToAnotherPlanet);
+        _moveToAnotherPlanet = moveToAnotherPlanet();
+        StartCoroutine(_moveToAnotherPlanet);
+    }
+
+    private IEnumerator moveToAnotherPlanet()
+    {
+        float _t = 0;
+        Vector3 _startPosition = cameraTransform.position;
+        Vector3 _endPosition = _planet.transform.position + new Vector3(0, 0, _z);
+        while (_t < 1)
+        {
+            _t += Time.deltaTime / flightTime;
+            cameraTransform.position = Vector3.Lerp(_startPosition,_endPosition,_t*_t*(3-2*_t));
+            yield return null;
+        }
+        cameraTransform.position = _endPosition;
+        shipController.SetPlanet(_planet);
+        // Прилет
     }
 
     private void setNextPlanet()
@@ -62,9 +94,6 @@ public class GameController : MonoBehaviour
             _planet = planetObject.GetComponent<Planet>();
             _planet.Create(true);
         }
-        cameraTransform.position = _planet.transform.position - new Vector3(0, 0, 10);
-
-        shipController.SetPlanet(_planet);
         _levelCompleted = false;
 
         if (_completedLevelsCount % 2 == 0)

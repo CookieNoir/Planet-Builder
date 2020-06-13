@@ -163,10 +163,10 @@ MonoBehaviour:
   shipController: {fileID: 1444404716}
   cameraTransform: {fileID: 519420032}
   level: 1
-  staticLevelsCount: 1
+  staticLevelsCount: 0
   planets:
   - {fileID: 2387504239665869126, guid: 93fae67aa0d40ad4eab0a7686bde7655, type: 3}
-  offset: {x: 3, y: 4}
+  offset: {x: 6, y: 10}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0

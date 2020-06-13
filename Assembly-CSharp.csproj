@@ -64,7 +64,6 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\BezierCurves.cs" />
     <Compile Include="Assets\Scripts\BlockInfo.cs" />
-    <Compile Include="Assets\Scripts\CameraTranslation.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\HomeController.cs" />
     <Compile Include="Assets\Scripts\Planet.cs" />

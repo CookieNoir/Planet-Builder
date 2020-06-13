@@ -25,10 +25,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2387504239665869126}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.03488964, y: -1.4850001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2387504240284548490}
+  - {fileID: 2427140468716962168}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -44,20 +44,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59f9be48a6bf8334494a71c0f08a9ae4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfSlots: 9
+  planet: {fileID: 2427140468716962168}
+  numberOfSlots: 10
+  planetRadius: 0.47
+  planetAtmosphereRadius: 2.5
   height: 3
   difficulty: 1
-  planetRadius: 0.3
-  planetAtmosphereRadius: 2
-  blockScale: 0.23
-  shipSpeed: 60
-  startAngle: 203
+  shipSpeed: 120
+  startAngle: 329
   isClockwise: 1
-  randomObjects: 1
-  buildingsToWin: 0
-  objectsTypes: 
-  isObstacle: 
-  props: []
+  buildingsToWin: 5
+  obstaclesTypes: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
   obstacles:
   - {fileID: 6918149616081744982, guid: b23b00be903a81a4e824d852a514ad95, type: 3}
 --- !u!1 &2387504240284548489
@@ -85,11 +82,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2387504240284548489}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 0}
   m_Children: []
-  m_Father: {fileID: 2387504239665869122}
+  m_Father: {fileID: 2427140468716962168}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2387504240284548500
@@ -139,3 +136,34 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &3702943326543909625
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2427140468716962168}
+  m_Layer: 0
+  m_Name: Origin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2427140468716962168
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3702943326543909625}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.49300343, y: 0.49300343, z: 1}
+  m_Children:
+  - {fileID: 2387504240284548490}
+  m_Father: {fileID: 2387504239665869122}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
