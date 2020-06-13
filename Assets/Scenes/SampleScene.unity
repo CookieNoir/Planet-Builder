@@ -161,12 +161,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shipController: {fileID: 1444404716}
-  cameraTransform: {fileID: 519420032}
+  gameCamera: {fileID: 519420031}
   level: 1
   staticLevelsCount: 0
   planets:
   - {fileID: 2387504239665869126, guid: 93fae67aa0d40ad4eab0a7686bde7655, type: 3}
-  offset: {x: 6, y: 10}
+  offset: {x: 7, y: 14}
+  flightTime: 6
+  zoomTime: 2
+  cameraSize: {x: 5, y: 10}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0

@@ -4,22 +4,24 @@ using System.Collections;
 public class GameController : MonoBehaviour
 {
     public ShipController shipController;
-    public Transform cameraTransform;
+    public Camera gameCamera;
     public int level = 1;
     public int staticLevelsCount;
     public GameObject[] planets;
 
     public Vector2 offset;
-    public float flightTime = 3f;
+    [Range(4f, 12f)] public float flightTime = 3f;
+    [Range(1f, 3f)] public float zoomTime = 2f;
+    public Vector2 cameraSize;
 
     public static GameController instance;
 
     private Planet _planet;
+    private GameObject _prevPlanet;
     private bool _levelCompleted;
     private int _completedLevelsCount; // Количество завершенных уровней в текущей игровой сессии
     private Vector3 _newPlanetPosition;
     private IEnumerator _moveToAnotherPlanet;
-    private float _z;
 
     void Start()
     {
@@ -28,10 +30,11 @@ public class GameController : MonoBehaviour
         _newPlanetPosition = Vector3.zero;
         setNextPlanet();
         _moveToAnotherPlanet = moveToAnotherPlanet();
-        _z = cameraTransform.position.z;
+        gameCamera.orthographicSize = cameraSize.x;
+
         shipController.SetPlanet(_planet);
+        _newPlanetPosition = new Vector3(offset.x, offset.y, 0);
         // Прилет
-        cameraTransform.position = _planet.transform.position + new Vector3(0, 0, _z);
     }
 
     public static void CheckLevel()
@@ -65,21 +68,53 @@ public class GameController : MonoBehaviour
     private IEnumerator moveToAnotherPlanet()
     {
         float _t = 0;
-        Vector3 _startPosition = cameraTransform.position;
-        Vector3 _endPosition = _planet.transform.position + new Vector3(0, 0, _z);
-        while (_t < 1)
+        float _t2 = 0;
+        float _tf = 0;
+        float _f = 1f / flightTime;
+        Vector3 _startPosition = gameCamera.transform.position;
+        Vector3 _endPosition = gameCamera.transform.position + _newPlanetPosition;
+        while (_t < zoomTime)
         {
-            _t += Time.deltaTime / flightTime;
-            cameraTransform.position = Vector3.Lerp(_startPosition,_endPosition,_t*_t*(3-2*_t));
+            _t += Time.deltaTime;
+            _t2 = _t / zoomTime;
+            _tf += Time.deltaTime * _f;
+            gameCamera.orthographicSize = Mathf.Lerp(cameraSize.x, cameraSize.y, Mathf.Sqrt(_t2*_t2*(3-2*_t2)));
+            gameCamera.transform.position = Vector3.Lerp(_startPosition, _endPosition, _tf * _tf * (3 - 2 * _tf));
             yield return null;
         }
-        cameraTransform.position = _endPosition;
+        gameCamera.orthographicSize = cameraSize.y;
+        while (_t < flightTime - zoomTime)
+        {
+            _t += Time.deltaTime;
+            _tf += Time.deltaTime * _f;
+            gameCamera.transform.position = Vector3.Lerp(_startPosition, _endPosition, _tf * _tf * (3 - 2 * _tf));
+            yield return null;
+        }
+        while (_t < flightTime)
+        {
+            _t += Time.deltaTime;
+            _t2 = (_t - flightTime) / zoomTime + 1;
+            _tf += Time.deltaTime * _f;
+            gameCamera.orthographicSize = Mathf.Lerp(cameraSize.y, cameraSize.x, Mathf.Sqrt(_t2 * _t2 * (3 - 2 * _t2)));
+            gameCamera.transform.position = Vector3.Lerp(_startPosition, _endPosition, _tf * _tf * (3 - 2 * _tf));
+            yield return null;
+        }
+        gameCamera.orthographicSize = cameraSize.x;
+        Destroy(_prevPlanet);
+        _planet.transform.position -= _newPlanetPosition;
+        gameCamera.transform.position = _endPosition - _newPlanetPosition;
+        shipController.transform.position -= _newPlanetPosition;
         shipController.SetPlanet(_planet);
+        _newPlanetPosition.x *= -1;
         // Прилет
     }
 
     private void setNextPlanet()
     {
+        if (_planet)
+        {
+            _prevPlanet = _planet.gameObject;
+        }
         GameObject planetObject;
         if (level <= staticLevelsCount)
         {
@@ -95,14 +130,5 @@ public class GameController : MonoBehaviour
             _planet.Create(true);
         }
         _levelCompleted = false;
-
-        if (_completedLevelsCount % 2 == 0)
-        {
-            _newPlanetPosition += new Vector3(offset.x, offset.y, 0);
-        }
-        else
-        {
-            _newPlanetPosition += new Vector3(-offset.x, offset.y, 0);
-        }
     }
 }
