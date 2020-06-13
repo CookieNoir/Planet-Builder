@@ -17,9 +17,9 @@ public class CameraTranslation : MonoBehaviour
 
     public TranslationType type;
 
-    private BezierCurves m_curses;
-    private Camera m_camera;
-    private float m_fit = 0f;
+    private BezierCurves _curves;
+    private Camera _camera;
+    private float _fit = 0f;
 
     private Vector3 centroid;
     private Vector3 startPosition;
@@ -27,7 +27,7 @@ public class CameraTranslation : MonoBehaviour
 
     void Start()
     {
-        m_camera = GetComponent<Camera>();
+        _camera = GetComponent<Camera>();
 
         centroid = (start.position + end.position) * .5f;
 
@@ -49,14 +49,14 @@ public class CameraTranslation : MonoBehaviour
     {
         if (isTranslation)
         {
-            if (m_fit >= 1f)
+            if (_fit >= 1f)
             {
                 isTranslation = false;
                 return;
             }
 
-            m_fit += Time.deltaTime * speed;
-            m_camera.transform.position = BezierCurves.QuadricLerp(startPosition, centroid, endPosition, m_fit);
+            _fit += Time.deltaTime * speed;
+            _camera.transform.position = BezierCurves.QuadricLerp(startPosition, centroid, endPosition, _fit);
         }
     }
 }

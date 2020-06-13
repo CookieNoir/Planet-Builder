@@ -8,8 +8,8 @@ public class PolarSystem
         angle *= Mathf.Deg2Rad;
         Vector3 newPosition = new Vector3();
 
-        newPosition.x = (center.x + radius) * Mathf.Cos(angle);
-        newPosition.y = (center.y + radius) * Mathf.Sin(angle);
+        newPosition.x = center.x + radius * Mathf.Cos(angle);
+        newPosition.y = center.y + radius * Mathf.Sin(angle);
         newPosition.z = 0;
 
         return newPosition;

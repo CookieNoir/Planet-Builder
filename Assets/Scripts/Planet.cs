@@ -40,7 +40,7 @@ public class Planet : MonoBehaviour
     private float _slotAngle;
     private float _slotAngleHalf;
 
-    public void Create()
+    public void Create(bool random = false)
     {
         _numberOfSlots = (int)numberOfSlots;
         _buildingsHeight = new int[_numberOfSlots];
@@ -191,11 +191,14 @@ public class Planet : MonoBehaviour
 
     public bool IsCompleted()
     {
-        if (_buildingsCompleted == _buildingsToWin)
+        if (_buildingsCompleted >= _buildingsToWin)
         {
             return true;
         }
-        else return false;
+        else
+        {
+            return false;
+        }
     }
 
     private void OnDrawGizmos()
@@ -220,7 +223,7 @@ public class Planet : MonoBehaviour
         }
         if (startAngle > 1f && startAngle < 359f)
         {
-            Gizmos.DrawLine(transform.position + PolarSystem.Position(startAngle, planetRadius, transform.position), transform.position + PolarSystem.Position(startAngle, planetAtmosphereRadius, transform.position));
+            Gizmos.DrawLine(PolarSystem.Position(startAngle, planetRadius, transform.position), PolarSystem.Position(startAngle, planetAtmosphereRadius, transform.position));
         }
     }
 
