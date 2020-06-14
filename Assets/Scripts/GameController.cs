@@ -16,6 +16,9 @@ public class GameController : MonoBehaviour
     public float cameraSizeAtStart = 7f;
     public float shipPathLength = 10f;
 
+    public GameObject menuUi;
+    public GameObject ingameUi;
+
     public static GameController instance;
 
     private Planet _planet;
@@ -36,8 +39,6 @@ public class GameController : MonoBehaviour
         _moveToAnotherPlanet = moveToAnotherPlanet();
         _zoomAtStart = zoomAtStart();
         gameCamera.orthographicSize = cameraSizeAtStart;
-
-        StartGame();
     }
 
     public void StartGame()
@@ -45,6 +46,8 @@ public class GameController : MonoBehaviour
         StopCoroutine(_zoomAtStart);
         _zoomAtStart = zoomAtStart();
         StartCoroutine(_zoomAtStart);
+        menuUi.SetActive(false);
+        ingameUi.SetActive(true);
     }
 
     private IEnumerator zoomAtStart()
