@@ -165,9 +165,8 @@ public class GameController : MonoBehaviour
         _completedLevelsCount++;
         PlayerPrefs.SetInt("Level", level);
         levelText.text = "уровень " + level;
-        heightText.text = "макс. высота - " + _planet.height.ToString();
         setNextPlanet();
-
+        heightText.text = "макс. высота - " + _planet.height.ToString();
         StopCoroutine(_moveToAnotherPlanet);
         _moveToAnotherPlanet = moveToAnotherPlanet();
         StartCoroutine(_moveToAnotherPlanet);

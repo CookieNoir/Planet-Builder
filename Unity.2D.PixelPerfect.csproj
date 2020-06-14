@@ -598,6 +598,7 @@
     <Compile Include="Packages\com.unity.2d.pixel-perfect\Runtime\PixelPerfectCameraInternal.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Materials\Sprite Shader.shader" />
     <None Include="Packages\com.unity.2d.animation\Editor\Assets\LayoutOverlay\LayoutOverlay.uxml" />
     <None Include="Packages\com.unity.2d.animation\Editor\Assets\LayoutOverlay\LayoutOverlayStyle.uss" />
     <None Include="Packages\com.unity.2d.animation\Editor\Assets\LayoutOverlay\ScrollableToolbar.uss" />
