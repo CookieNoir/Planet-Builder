@@ -5,6 +5,7 @@ using System;
 public class Planet : MonoBehaviour
 {
     public Transform planet;
+    public Transform border;
 
     public enum NumberOfSlots { _9 = 9, _10 = 10, _12 = 12, _15 = 15, _18 = 18 };
 
@@ -86,7 +87,7 @@ public class Planet : MonoBehaviour
         _blockScale = planetRadius * _sqrt;
         _planetRadiusAddition = planetRadius * (1 - Mathf.Cos(_slotAngleHalf * Mathf.Deg2Rad));
         planet.localScale = new Vector3(planetRadius + _planetRadiusAddition, planetRadius + _planetRadiusAddition, 1f);
-
+        border.localScale = new Vector3(planetRadius + height * _blockScale, planetRadius + height * _blockScale, 1f);
     }
 
     public void Create(bool random = false)

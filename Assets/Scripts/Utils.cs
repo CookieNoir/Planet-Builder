@@ -2,20 +2,19 @@
 
 public class Utils
 {
-    public static float AngleDeg(float xPosition, float yPosition)
+    public static float AngleDeg(Vector3 position, float radius, Vector3 center)
     {
-        return Mathf.Atan2(xPosition, yPosition) * Mathf.Rad2Deg;
+        float x = position.x - center.x;
+        float y = position.y - center.y;
+
+        float angle = Mathf.Acos(x/radius);
+        if (y < 0) angle *= -1;
+        return angle*Mathf.Rad2Deg;
     }
 
-    public static Vector3 StartingPointOfTheTangentEquation(Vector3 center, float radiusInput, float radiusOutput)
+    public static Vector3 StartingPointOfTheTangentEquation(Vector3 position, Vector3 center, float radiusInput, float radiusOutput, bool isClockwise, float additionalAngle=0f)
     {
-        float angle = AngleDeg(center.x, radiusInput) + 90f;
-        return PolarSystem.Position(angle, radiusOutput, center);
-    }
-
-    public static Vector3 StartingPointOfTheTangentEquation(Vector3 center, float radiusInput, float radiusOutput, bool isClockwise)
-    {
-        float angle = AngleDeg(center.x, radiusInput);
+        float angle = AngleDeg(position, radiusInput, center) + additionalAngle;
         if (isClockwise)
         {
             angle -= 90f;

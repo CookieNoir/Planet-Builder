@@ -13,6 +13,8 @@ public class GameController : MonoBehaviour
     [Range(4f, 12f)] public float flightTime = 3f;
     [Range(1f, 3f)] public float zoomTime = 2f;
     public Vector2 cameraSize;
+    public float cameraSizeAtStart = 7f;
+    public float shipPathLength = 10f;
 
     public static GameController instance;
 
@@ -22,6 +24,7 @@ public class GameController : MonoBehaviour
     private int _completedLevelsCount; // Количество завершенных уровней в текущей игровой сессии
     private Vector3 _newPlanetPosition;
     private IEnumerator _moveToAnotherPlanet;
+    private IEnumerator _zoomAtStart;
 
     void Start()
     {
@@ -29,12 +32,34 @@ public class GameController : MonoBehaviour
         _completedLevelsCount = 0;
         _newPlanetPosition = Vector3.zero;
         setNextPlanet();
-        _moveToAnotherPlanet = moveToAnotherPlanet();
-        gameCamera.orthographicSize = cameraSize.x;
-
-        shipController.SetPlanet(_planet);
         _newPlanetPosition = new Vector3(offset.x, offset.y, 0);
-        // Прилет
+        _moveToAnotherPlanet = moveToAnotherPlanet();
+        _zoomAtStart = zoomAtStart();
+        gameCamera.orthographicSize = cameraSizeAtStart;
+
+        StartGame();
+    }
+
+    public void StartGame()
+    {
+        StopCoroutine(_zoomAtStart);
+        _zoomAtStart = zoomAtStart();
+        StartCoroutine(_zoomAtStart);
+    }
+
+    private IEnumerator zoomAtStart()
+    {
+        float _t = 0;
+        float _t2 = 0;
+        while (_t < zoomTime)
+        {
+            yield return null;
+            _t += Time.deltaTime;
+            _t2 = _t / zoomTime;
+            gameCamera.orthographicSize = Mathf.Lerp(cameraSizeAtStart, cameraSize.x, Mathf.Sqrt(_t2 * _t2 * (3 - 2 * _t2)));
+        }
+        gameCamera.orthographicSize = cameraSize.x;
+        shipController.ToPlanet(_planet, shipPathLength);
     }
 
     public static void CheckLevel()
@@ -67,6 +92,7 @@ public class GameController : MonoBehaviour
 
     private IEnumerator moveToAnotherPlanet()
     {
+        shipController.FromPlanet(shipPathLength);
         float _t = 0;
         float _t2 = 0;
         float _tf = 0;
@@ -75,29 +101,29 @@ public class GameController : MonoBehaviour
         Vector3 _endPosition = gameCamera.transform.position + _newPlanetPosition;
         while (_t < zoomTime)
         {
+            yield return null;
             _t += Time.deltaTime;
             _t2 = _t / zoomTime;
             _tf += Time.deltaTime * _f;
             gameCamera.orthographicSize = Mathf.Lerp(cameraSize.x, cameraSize.y, Mathf.Sqrt(_t2*_t2*(3-2*_t2)));
             gameCamera.transform.position = Vector3.Lerp(_startPosition, _endPosition, _tf * _tf * (3 - 2 * _tf));
-            yield return null;
         }
         gameCamera.orthographicSize = cameraSize.y;
         while (_t < flightTime - zoomTime)
         {
+            yield return null;
             _t += Time.deltaTime;
             _tf += Time.deltaTime * _f;
             gameCamera.transform.position = Vector3.Lerp(_startPosition, _endPosition, _tf * _tf * (3 - 2 * _tf));
-            yield return null;
         }
         while (_t < flightTime)
         {
+            yield return null;
             _t += Time.deltaTime;
             _t2 = (_t - flightTime) / zoomTime + 1;
             _tf += Time.deltaTime * _f;
             gameCamera.orthographicSize = Mathf.Lerp(cameraSize.y, cameraSize.x, Mathf.Sqrt(_t2 * _t2 * (3 - 2 * _t2)));
             gameCamera.transform.position = Vector3.Lerp(_startPosition, _endPosition, _tf * _tf * (3 - 2 * _tf));
-            yield return null;
         }
         gameCamera.orthographicSize = cameraSize.x;
         Destroy(_prevPlanet);
@@ -106,7 +132,7 @@ public class GameController : MonoBehaviour
         shipController.transform.position -= _newPlanetPosition;
         shipController.SetPlanet(_planet);
         _newPlanetPosition.x *= -1;
-        // Прилет
+        shipController.ToPlanet(_planet, shipPathLength);
     }
 
     private void setNextPlanet()
