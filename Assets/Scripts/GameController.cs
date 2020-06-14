@@ -16,9 +16,6 @@ public class GameController : MonoBehaviour
     public float cameraSizeAtStart = 7f;
     public float shipPathLength = 10f;
 
-    public GameObject menuUi;
-    public GameObject ingameUi;
-
     public static GameController instance;
 
     private Planet _planet;
@@ -32,6 +29,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         instance = this as GameController;
+        level = PlayerPrefs.GetInt("Level", 1);
         _completedLevelsCount = 0;
         _newPlanetPosition = Vector3.zero;
         setNextPlanet();
@@ -46,8 +44,6 @@ public class GameController : MonoBehaviour
         StopCoroutine(_zoomAtStart);
         _zoomAtStart = zoomAtStart();
         StartCoroutine(_zoomAtStart);
-        menuUi.SetActive(false);
-        ingameUi.SetActive(true);
     }
 
     private IEnumerator zoomAtStart()
@@ -83,8 +79,7 @@ public class GameController : MonoBehaviour
     {
         level++;
         _completedLevelsCount++;
-
-        // Корабль движется к безопасному углу, вылетает за пределы экрана
+        PlayerPrefs.SetInt("Level", level);
 
         setNextPlanet();
 

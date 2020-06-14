@@ -3,6 +3,7 @@
 public class HomeController : MonoBehaviour
 {
     public BlockInfo homeInfo;
+    public SpriteRenderer homeIcon;
     [Range(3f, 5f)] public float speed = 5f;
     public Vector3 shipPosition;
 
@@ -15,6 +16,11 @@ public class HomeController : MonoBehaviour
 
         transform.rotation = homeInfo.rotation;
         transform.localScale = new Vector3(homeInfo.scale, homeInfo.scale, homeInfo.scale);
+    }
+
+    public void ChangeColor(Color color)
+    {
+        homeIcon.color = color;
     }
 
     private void Update()

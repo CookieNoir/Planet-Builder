@@ -8,6 +8,8 @@ public class ShipController : MonoBehaviour
     public GameObject homeBlock;
     [Range(5f, 20f)] public float maxSpeed = 10f;
 
+    public Color[] blocksColors;
+
     private float _speed = 60f;
     private Planet _planet;
     private IEnumerator _smoothFlight;
@@ -141,7 +143,7 @@ public class ShipController : MonoBehaviour
     {
         if (_onPlanet)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Mouse0)||Input.GetKeyDown(KeyCode.Space))
             {
                 float angleZ = transform.rotation.eulerAngles.z;
                 BlockInfo info = _planet.AddBlock(angleZ);
@@ -152,6 +154,7 @@ public class ShipController : MonoBehaviour
                 homeController.homeInfo = info;
                 homeController.shipPosition = transform.position;
                 homeController.HomeBuild();
+                homeController.ChangeColor(blocksColors[Random.Range(0, blocksColors.Length)]);
 
                 childHome.transform.SetParent(_planet.transform);
                 _planet.addBlockToBlocksList(childHome);
