@@ -6,6 +6,7 @@ public class ShipController : MonoBehaviour
     public SpriteRenderer ship;
     public SpriteRenderer laser;
     public GameObject homeBlock;
+    public AudioSource audioSource;
     [Range(5f, 20f)] public float maxSpeed = 10f;
 
     public Color[] blocksColors;
@@ -15,6 +16,7 @@ public class ShipController : MonoBehaviour
     private IEnumerator _smoothFlight;
     private IEnumerator _laserModifier;
     private bool _onPlanet = false;
+    private bool _canPlace = true;
     private Color _alpha;
 
     private void Start()
@@ -139,12 +141,24 @@ public class ShipController : MonoBehaviour
         StartCoroutine(_laserModifier);
     }
 
+    public void ChangeActivity(bool flag)
+    {
+        _canPlace = !_canPlace;
+    }
+
+    public void SetStartPosition()
+    {
+        transform.rotation = Quaternion.Euler(0, 0, _planet.startAngle);
+        transform.position = PolarSystem.Position(_planet.startAngle, _planet.planetAtmosphereRadius, _planet.transform.position);
+    }
+
     void Update()
     {
         if (_onPlanet)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0)||Input.GetKeyDown(KeyCode.Space))
+            if (_canPlace&&(Input.GetKeyDown(KeyCode.Mouse0)||Input.GetKeyDown(KeyCode.Space)))
             {
+                if (audioSource) audioSource.Play();
                 float angleZ = transform.rotation.eulerAngles.z;
                 BlockInfo info = _planet.AddBlock(angleZ);
 
@@ -157,7 +171,7 @@ public class ShipController : MonoBehaviour
                 homeController.ChangeColor(blocksColors[Random.Range(0, blocksColors.Length)]);
 
                 childHome.transform.SetParent(_planet.transform);
-                _planet.addBlockToBlocksList(childHome);
+                _planet.AddBlockToBlocksList(childHome);
             }
 
             if (_planet.isClockwise)

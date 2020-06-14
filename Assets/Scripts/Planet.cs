@@ -60,6 +60,16 @@ public class Planet : MonoBehaviour
         else return false;
     }
 
+    public int GetBuildingsToWin()
+    {
+        return _buildingsToWin;
+    }
+
+    public int GetBuildingsCompleted()
+    {
+        return _buildingsCompleted;
+    }
+
     private void setValues(bool random = false)
     {
         if (random)
@@ -205,10 +215,15 @@ public class Planet : MonoBehaviour
 
     private BlockInfo addBlock(int slot)
     {
+        GameController.ChangeBlocksLandingAmount(1);
         if (_buildingsHeight[slot] <= -1 || _buildingsHeight[slot] >= height)
         {
             if (_buildingsHeight[slot] <= -1) return new BlockInfo(false, PolarSystem.Position(slot * _slotAngle, planetRadius, transform.position), Quaternion.Euler(0, 0, slot * _slotAngle - 90f), _blockScale);
-            else return new BlockInfo(false, PolarSystem.Position(slot * _slotAngle, planetRadius + height * _blockScale, transform.position), Quaternion.Euler(0, 0, slot * _slotAngle - 90f), _blockScale);
+            else
+            {
+                _buildingsHeight[slot]++;
+                return new BlockInfo(false, PolarSystem.Position(slot * _slotAngle, planetRadius + (_buildingsHeight[slot] - 1) * _blockScale, transform.position), Quaternion.Euler(0, 0, slot * _slotAngle - 90f), _blockScale);
+            }
         }
         else
         {
@@ -219,7 +234,7 @@ public class Planet : MonoBehaviour
         }
     }
 
-    public void addBlockToBlocksList(GameObject block)
+    public void AddBlockToBlocksList(GameObject block)
     {
         _blocks.Add(block);
     }

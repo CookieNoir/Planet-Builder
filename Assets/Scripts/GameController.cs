@@ -1,10 +1,18 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
     public ShipController shipController;
     public Camera gameCamera;
+    public AlphaChanger whiteScreen;
+
+    public Text levelText;
+    public Text targetText;
+    public Text heightText;
+
     public int level = 1;
     public int staticLevelsCount;
     public GameObject[] planets;
@@ -16,6 +24,8 @@ public class GameController : MonoBehaviour
     public float cameraSizeAtStart = 7f;
     public float shipPathLength = 10f;
 
+    public GameObject trail;
+
     public static GameController instance;
 
     private Planet _planet;
@@ -25,6 +35,11 @@ public class GameController : MonoBehaviour
     private Vector3 _newPlanetPosition;
     private IEnumerator _moveToAnotherPlanet;
     private IEnumerator _zoomAtStart;
+    private IEnumerator _restart;
+    private IEnumerator _changeAlpha;
+    private bool _restarting;
+    private bool _changingLevel;
+    private int _blocksLanding;
 
     void Start()
     {
@@ -36,6 +51,13 @@ public class GameController : MonoBehaviour
         _newPlanetPosition = new Vector3(offset.x, offset.y, 0);
         _moveToAnotherPlanet = moveToAnotherPlanet();
         _zoomAtStart = zoomAtStart();
+        _restart = restart();
+        _changeAlpha = whiteScreen.ChangeAlpha(true);
+        StartCoroutine(_changeAlpha);
+        _restarting = false;
+        _changingLevel = false;
+        levelText.text = "уровень " + level;
+        heightText.text = "макс. высота - "+_planet.height.ToString();
         gameCamera.orthographicSize = cameraSizeAtStart;
     }
 
@@ -63,24 +85,87 @@ public class GameController : MonoBehaviour
 
     public static void CheckLevel()
     {
-        instance._levelCompleted = instance._planet.IsCompleted();
-        if (instance._levelCompleted)
+        if (instance)
         {
-            instance.changeLevel();
+            instance._levelCompleted = instance._planet.IsCompleted();
+            if (instance._levelCompleted && instance._blocksLanding == 0)
+            {
+                instance.changeLevel();
+            }
         }
+    }
+
+    public static void ChangeBlocksLandingAmount(int value)
+    {
+        if (instance) instance._blocksLanding += value;
     }
 
     public static void Restart()
     {
-        instance._planet.Refresh();
+        if (instance) instance.restartGC();
+    }
+
+    private void restartGC()
+    {
+        if (!_restarting && _blocksLanding > 0)
+        {
+            _restarting = true;
+            StopCoroutine(_restart);
+            _restart = restart();
+            StartCoroutine(_restart);
+        }
+    }
+
+    private IEnumerator restart()
+    {
+        float _t = 0;
+        shipController.ChangeActivity(false);
+        while (_t < 1f)
+        {
+            yield return null;
+            _t += Time.deltaTime;
+        }
+        whiteScreen.gameObject.SetActive(true);
+        StopCoroutine(_changeAlpha);
+        _changeAlpha = whiteScreen.ChangeAlpha();
+        StartCoroutine(_changeAlpha);
+        _t = 0;
+        while (_t < whiteScreen.increasingDuration)
+        {
+            yield return null;
+            _t += Time.deltaTime;
+        }
+        _t = 0;
+        while (_t < 0.25f)
+        {
+            yield return null;
+            _t += Time.deltaTime;
+        }
+        _planet.Refresh();
+        shipController.SetStartPosition();
+        _t = 0;
+        StopCoroutine(_changeAlpha);
+        _changeAlpha = whiteScreen.ChangeAlpha();
+        StartCoroutine(_changeAlpha);
+        shipController.ChangeActivity(true);
+        _blocksLanding = 0;
+        _restarting = false;
+        while (_t < whiteScreen.decreasingDuration)
+        {
+            yield return null;
+            _t += Time.deltaTime;
+        }
+        whiteScreen.gameObject.SetActive(false);
     }
 
     private void changeLevel()
     {
+        _changingLevel = true;
         level++;
         _completedLevelsCount++;
         PlayerPrefs.SetInt("Level", level);
-
+        levelText.text = "уровень " + level;
+        heightText.text = "макс. высота - " + _planet.height.ToString();
         setNextPlanet();
 
         StopCoroutine(_moveToAnotherPlanet);
@@ -97,13 +182,14 @@ public class GameController : MonoBehaviour
         float _f = 1f / flightTime;
         Vector3 _startPosition = gameCamera.transform.position;
         Vector3 _endPosition = gameCamera.transform.position + _newPlanetPosition;
+        trail.SetActive(true);
         while (_t < zoomTime)
         {
             yield return null;
             _t += Time.deltaTime;
             _t2 = _t / zoomTime;
             _tf += Time.deltaTime * _f;
-            gameCamera.orthographicSize = Mathf.Lerp(cameraSize.x, cameraSize.y, Mathf.Sqrt(_t2*_t2*(3-2*_t2)));
+            gameCamera.orthographicSize = Mathf.Lerp(cameraSize.x, cameraSize.y, Mathf.Sqrt(_t2 * _t2 * (3 - 2 * _t2)));
             gameCamera.transform.position = Vector3.Lerp(_startPosition, _endPosition, _tf * _tf * (3 - 2 * _tf));
         }
         gameCamera.orthographicSize = cameraSize.y;
@@ -131,6 +217,13 @@ public class GameController : MonoBehaviour
         shipController.SetPlanet(_planet);
         _newPlanetPosition.x *= -1;
         shipController.ToPlanet(_planet, shipPathLength);
+        trail.SetActive(false);
+        _changingLevel = false;
+    }
+
+    private void Update()
+    {
+        targetText.text = "построено " + instance._planet.GetBuildingsCompleted().ToString() + " из " + instance._planet.GetBuildingsToWin().ToString();
     }
 
     private void setNextPlanet()
@@ -154,5 +247,10 @@ public class GameController : MonoBehaviour
             _planet.Create(true);
         }
         _levelCompleted = false;
+    }
+
+    public void ToMenu()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

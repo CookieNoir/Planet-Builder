@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\AlphaChanger.cs" />
     <Compile Include="Assets\Scripts\BezierCurves.cs" />
     <Compile Include="Assets\Scripts\BlockInfo.cs" />
+    <Compile Include="Assets\Scripts\ExplosionBehaviour.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\HomeController.cs" />
     <Compile Include="Assets\Scripts\Menu Scripts\AnimScript.cs" />
@@ -73,7 +74,7 @@
     <Compile Include="Assets\Scripts\Menu Scripts\ShipChangeSpriteScript.cs" />
     <Compile Include="Assets\Scripts\Menu Scripts\ShipCustScript.cs" />
     <Compile Include="Assets\Scripts\Menu Scripts\ShipScript.cs" />
-    <Compile Include="Assets\Scripts\Menu Scripts\SoundControllerScript.cs" />
+    <Compile Include="Assets\Scripts\Menu Scripts\SoundController.cs" />
     <Compile Include="Assets\Scripts\MenuUIChanger.cs" />
     <Compile Include="Assets\Scripts\Planet.cs" />
     <Compile Include="Assets\Scripts\PolarSystem.cs" />

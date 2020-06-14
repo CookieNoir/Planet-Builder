@@ -4,8 +4,12 @@ public class HomeController : MonoBehaviour
 {
     public BlockInfo homeInfo;
     public SpriteRenderer homeIcon;
+    public GameObject explosion;
     [Range(3f, 5f)] public float speed = 5f;
     public Vector3 shipPosition;
+    public AudioSource audioSource;
+    public AudioClip clipLanding;
+    public AudioClip clipDestroy;
 
     private float _t = 0f;
     private bool _canPlace = false;
@@ -41,10 +45,14 @@ public class HomeController : MonoBehaviour
     {
         if (_canPlace)
         {
+            if (audioSource) audioSource.PlayOneShot(clipLanding);
+            GameController.ChangeBlocksLandingAmount(-1);
             GameController.CheckLevel();
         }
         else
         {
+            if (audioSource) audioSource.PlayOneShot(clipDestroy);
+            Instantiate(explosion, transform);
             GameController.Restart();
         }
     }

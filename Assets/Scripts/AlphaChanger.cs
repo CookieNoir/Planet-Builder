@@ -24,7 +24,7 @@ public class AlphaChanger : MonoBehaviour
         increasingDurationInversed = 1f / increasingDuration;
     }
 
-    public IEnumerator ChangeAlpha()
+    public IEnumerator ChangeAlpha(bool hideObject = false)
     {
         Color c = maskableGraphic.color;
         increase = !increase;
@@ -37,6 +37,7 @@ public class AlphaChanger : MonoBehaviour
                 yield return null;
             }
             maskableGraphic.color = lowerColor;
+            if (hideObject) gameObject.SetActive(false);
         }
         else
         {
