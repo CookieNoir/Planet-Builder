@@ -8,10 +8,17 @@ public class GameController : MonoBehaviour
     public ShipController shipController;
     public Camera gameCamera;
     public AlphaChanger whiteScreen;
+    public AlphaChanger toMenuButton;
 
     public Text levelText;
     public Text targetText;
     public Text heightText;
+
+    public Hint hintSequence;
+
+    public UiMovement levelBoard;
+    public UiMovement targetBoard;
+    public UiMovement heightBoard;
 
     public int level = 1;
     public int staticLevelsCount;
@@ -52,12 +59,11 @@ public class GameController : MonoBehaviour
         _moveToAnotherPlanet = moveToAnotherPlanet();
         _zoomAtStart = zoomAtStart();
         _restart = restart();
+        whiteScreen.SetAlpha(1f);
         _changeAlpha = whiteScreen.ChangeAlpha(SimpleFunctions.SmoothStep, true);
         StartCoroutine(_changeAlpha);
         _restarting = false;
         _changingLevel = false;
-        levelText.text = "уровень " + level;
-        heightText.text = "макс. высота - " + _planet.height.ToString();
         gameCamera.orthographicSize = cameraSizeAtStart;
     }
 
@@ -81,6 +87,26 @@ public class GameController : MonoBehaviour
         }
         gameCamera.orthographicSize = cameraSize.x;
         shipController.ToPlanet(_planet, shipPathLength);
+        hintSequence.ShowHint();
+        inGameUiTranslate(true);
+    }
+
+    private void inGameUiTranslate(bool isLanding = false)
+    {
+        levelBoard.Translate();
+        targetBoard.Translate();
+        heightBoard.Translate();
+        if (isLanding)
+        {
+            levelText.text = "уровень " + level;
+            targetText.text = "построено " + 0 + " из " + instance._planet.GetBuildingsToWin().ToString();
+            heightText.text = "макс. высота - " + _planet.height.ToString();
+        }
+    }
+
+    private void refreshTargetText()
+    {
+        targetText.text = "построено " + instance._planet.GetBuildingsCompleted().ToString() + " из " + instance._planet.GetBuildingsToWin().ToString();
     }
 
     public static void CheckLevel()
@@ -88,6 +114,7 @@ public class GameController : MonoBehaviour
         if (instance)
         {
             instance._levelCompleted = instance._planet.IsCompleted();
+            instance.refreshTargetText();
             if (instance._levelCompleted && instance._blocksLanding == 0)
             {
                 instance.changeLevel();
@@ -142,6 +169,7 @@ public class GameController : MonoBehaviour
             _t += Time.deltaTime;
         }
         _planet.Refresh();
+        refreshTargetText();
         shipController.SetStartPosition();
         _t = 0;
         StopCoroutine(_changeAlpha);
@@ -164,9 +192,7 @@ public class GameController : MonoBehaviour
         level++;
         _completedLevelsCount++;
         PlayerPrefs.SetInt("Level", level);
-        levelText.text = "уровень " + level;
         setNextPlanet();
-        heightText.text = "макс. высота - " + _planet.height.ToString();
         StopCoroutine(_moveToAnotherPlanet);
         _moveToAnotherPlanet = moveToAnotherPlanet();
         StartCoroutine(_moveToAnotherPlanet);
@@ -182,6 +208,10 @@ public class GameController : MonoBehaviour
         Vector3 _startPosition = gameCamera.transform.position;
         Vector3 _endPosition = gameCamera.transform.position + _newPlanetPosition;
         trail.SetActive(true);
+        inGameUiTranslate();
+        StopCoroutine(_zoomAtStart); // Исп-тся _zoomAtStart вместо _changeAlpha, т.к. в момент перехода она однозначно свободна
+        _zoomAtStart = toMenuButton.ChangeAlpha();
+        StartCoroutine(_zoomAtStart);
         while (_t < zoomTime)
         {
             yield return null;
@@ -216,13 +246,12 @@ public class GameController : MonoBehaviour
         shipController.SetPlanet(_planet);
         _newPlanetPosition.x *= -1;
         shipController.ToPlanet(_planet, shipPathLength);
+        inGameUiTranslate(true);
+        StopCoroutine(_zoomAtStart);
+        _zoomAtStart = toMenuButton.ChangeAlpha(); // Исп-тся _zoomAtStart вместо _changeAlpha, т.к. в момент перехода она однозначно свободна
+        StartCoroutine(_zoomAtStart);
         trail.SetActive(false);
         _changingLevel = false;
-    }
-
-    private void Update()
-    {
-        targetText.text = "построено " + instance._planet.GetBuildingsCompleted().ToString() + " из " + instance._planet.GetBuildingsToWin().ToString();
     }
 
     private void setNextPlanet()

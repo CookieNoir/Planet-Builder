@@ -74,6 +74,7 @@
     <Compile Include="Assets\Scripts\Helpers\Utils.cs" />
     <Compile Include="Assets\Scripts\User Interface\AlphaChanger.cs" />
     <Compile Include="Assets\Scripts\User Interface\ChangeCanvases.cs" />
+    <Compile Include="Assets\Scripts\User Interface\Hint.cs" />
     <Compile Include="Assets\Scripts\User Interface\MenuUIChanger.cs" />
     <Compile Include="Assets\Scripts\User Interface\ShipCustomization.cs" />
     <Compile Include="Assets\Scripts\User Interface\ShipUIMover.cs" />

@@ -26,7 +26,7 @@ MonoBehaviour:
   - m_Name: Block Green
     m_Color: {r: 0.7129188, g: 0.8018868, b: 0.33664113, a: 1}
   - m_Name: Block Orange
-    m_Color: {r: 0.8867924, g: 0.60240203, b: 0.071110725, a: 1}
+    m_Color: {r: 0.8490566, g: 0.56247437, b: 0.06007475, a: 1}
   - m_Name: Block Red
     m_Color: {r: 0.5849056, g: 0.14740685, b: 0.08001069, a: 1}
   - m_Name: Block Sky Blue
@@ -35,3 +35,9 @@ MonoBehaviour:
     m_Color: {r: 0.5487158, g: 0.26366144, b: 0.7075472, a: 1}
   - m_Name: Block Yellow
     m_Color: {r: 0.9716981, g: 0.83358437, b: 0.132921, a: 1}
+  - m_Name: Block Green 2
+    m_Color: {r: 0.40471226, g: 0.5471698, b: 0.13679245, a: 1}
+  - m_Name: Block Blue
+    m_Color: {r: 0.28746885, g: 0.4528496, b: 0.6415094, a: 1}
+  - m_Name: Block Yellow 2
+    m_Color: {r: 0.8207547, g: 0.6593642, b: 0.127759, a: 1}

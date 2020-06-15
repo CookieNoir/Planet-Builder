@@ -26,13 +26,23 @@ public class AlphaChanger : MonoBehaviour
         increasingDurationInversed = 1f / increasingDuration;
     }
 
+    public static Color GetColorWithAlpha(Color color, float alpha)
+    {
+        return new Color(color.r, color.g, color.b, alpha);
+    }
+
+    public void SetAlpha(float alpha)
+    {
+        maskableGraphic.color = GetColorWithAlpha(maskableGraphic.color, alpha);
+    }
+
     public IEnumerator ChangeAlpha(bool hideObject = false)
     {
         Color c = maskableGraphic.color;
         increase = !increase;
         if (increase)
         {
-            lowerColor = new Color(c.r, c.g, c.b, lowerAlpha);
+            lowerColor = GetColorWithAlpha(c, lowerAlpha);
             for (float i = 0; i < decreasingDuration; i += Time.deltaTime)
             {
                 maskableGraphic.color = Vector4.Lerp(c, lowerColor, Mathf.Sqrt(i * decreasingDurationInversed));
@@ -43,7 +53,7 @@ public class AlphaChanger : MonoBehaviour
         }
         else
         {
-            higherColor = new Color(c.r, c.g, c.b, higherAlpha);
+            higherColor = GetColorWithAlpha(c, higherAlpha);
             for (float i = 0; i < increasingDuration; i += Time.deltaTime)
             {
                 maskableGraphic.color = Vector4.Lerp(c, higherColor, Mathf.Sqrt(i * increasingDurationInversed));
@@ -59,7 +69,7 @@ public class AlphaChanger : MonoBehaviour
         increase = !increase;
         if (increase)
         {
-            lowerColor = new Color(c.r, c.g, c.b, lowerAlpha);
+            lowerColor = GetColorWithAlpha(c, lowerAlpha);
             for (float i = 0; i < decreasingDuration; i += Time.deltaTime)
             {
                 maskableGraphic.color = Vector4.Lerp(c, lowerColor, func(i * decreasingDurationInversed));
@@ -70,7 +80,7 @@ public class AlphaChanger : MonoBehaviour
         }
         else
         {
-            higherColor = new Color(c.r, c.g, c.b, higherAlpha);
+            higherColor = GetColorWithAlpha(c, higherAlpha);
             for (float i = 0; i < increasingDuration; i += Time.deltaTime)
             {
                 maskableGraphic.color = Vector4.Lerp(c, higherColor, func(i * increasingDurationInversed));

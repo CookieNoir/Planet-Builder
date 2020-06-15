@@ -4,6 +4,7 @@ ScriptsOnlyBuild:
     - AlphaChanger
     - ExplosionBehaviour
     - GameController
+    - Hint
     - HomeController
     - MenuUIChanger
     - Planet
@@ -65,39 +66,41 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11174}
     - Class: 114
-      Script: {instanceID: 11226}
+      Script: {instanceID: 11224}
     - Class: 114
-      Script: {instanceID: 11428}
+      Script: {instanceID: 11426}
     - Class: 114
-      Script: {instanceID: 11468}
+      Script: {instanceID: 11466}
     - Class: 114
-      Script: {instanceID: 11522}
+      Script: {instanceID: 11520}
     - Class: 114
-      Script: {instanceID: 12024}
+      Script: {instanceID: 12022}
     - Class: 114
-      Script: {instanceID: 12186}
+      Script: {instanceID: 12184}
     - Class: 114
-      Script: {instanceID: 12310}
+      Script: {instanceID: 12304}
     - Class: 114
-      Script: {instanceID: 12818}
+      Script: {instanceID: 12812}
+    - Class: 114
+      Script: {instanceID: 13008}
     - Class: 114
       Script: {instanceID: 13018}
     - Class: 114
       Script: {instanceID: 13028}
     - Class: 114
-      Script: {instanceID: 13038}
+      Script: {instanceID: 13428}
     - Class: 114
-      Script: {instanceID: 13438}
+      Script: {instanceID: 13516}
     - Class: 114
-      Script: {instanceID: 13526}
+      Script: {instanceID: 13658}
     - Class: 114
-      Script: {instanceID: 13668}
+      Script: {instanceID: 13816}
     - Class: 114
-      Script: {instanceID: 13826}
+      Script: {instanceID: 14206}
     - Class: 114
-      Script: {instanceID: 14216}
+      Script: {instanceID: 14274}
     - Class: 114
-      Script: {instanceID: 14284}
+      Script: {instanceID: 16336}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -129,12 +132,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_SelectionCaret
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: ShipCustScript
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -353,12 +350,6 @@ ScriptsOnlyBuild:
     className: SpriteShape
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: DontDestroy
-  - hash:
-      serializedVersion: 2
       Hash: b8a5e8091ab0b8861d2add371082c5e0
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
@@ -375,12 +366,6 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Selectable
-  - hash:
-      serializedVersion: 2
-      Hash: 053e72d32ac341181ea884483fa93f9b
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: ShipChangeSpriteScript
   - hash:
       serializedVersion: 2
       Hash: a72412cdd21513b2139e2e14bfcc2004
@@ -431,22 +416,10 @@ ScriptsOnlyBuild:
     className: Planet
   - hash:
       serializedVersion: 2
-      Hash: 053e72d32ac341181ea884483fa93f9b
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: AnimScript
-  - hash:
-      serializedVersion: 2
       Hash: 4fd8bf02e3089425d3502e26c44ba31a
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TextContainer
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: ShipScript
   - hash:
       serializedVersion: 2
       Hash: 5f1752ed2092162f016c19510c28a8b9
@@ -551,7 +524,7 @@ ScriptsOnlyBuild:
     className: UiMovement
   - hash:
       serializedVersion: 2
-      Hash: 1dfade4f2b341d267ed8c66d6234bf92
+      Hash: bf0b15395eaaa843961259c4a29efcaf
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameController
@@ -699,6 +672,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 12e57425edb0249df9e81cf740fb6a91
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Hint
   platform: 13
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
