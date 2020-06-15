@@ -62,28 +62,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\AlphaChanger.cs" />
-    <Compile Include="Assets\Scripts\BezierCurves.cs" />
-    <Compile Include="Assets\Scripts\BlockInfo.cs" />
-    <Compile Include="Assets\Scripts\ExplosionBehaviour.cs" />
-    <Compile Include="Assets\Scripts\GameController.cs" />
-    <Compile Include="Assets\Scripts\HomeController.cs" />
-    <Compile Include="Assets\Scripts\Menu Scripts\AnimScript.cs" />
-    <Compile Include="Assets\Scripts\Menu Scripts\ChangeCanvases.cs" />
-    <Compile Include="Assets\Scripts\Menu Scripts\DontDestroy.cs" />
-    <Compile Include="Assets\Scripts\Menu Scripts\ShipChangeSpriteScript.cs" />
-    <Compile Include="Assets\Scripts\Menu Scripts\ShipCustScript.cs" />
-    <Compile Include="Assets\Scripts\Menu Scripts\ShipScript.cs" />
-    <Compile Include="Assets\Scripts\Menu Scripts\SoundController.cs" />
-    <Compile Include="Assets\Scripts\MenuUIChanger.cs" />
-    <Compile Include="Assets\Scripts\Planet.cs" />
-    <Compile Include="Assets\Scripts\PolarSystem.cs" />
-    <Compile Include="Assets\Scripts\ShipController.cs" />
-    <Compile Include="Assets\Scripts\ShipCustomization.cs" />
-    <Compile Include="Assets\Scripts\ShipUIMover.cs" />
-    <Compile Include="Assets\Scripts\SimpleFunctions.cs" />
-    <Compile Include="Assets\Scripts\UiMovement.cs" />
-    <Compile Include="Assets\Scripts\Utils.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\BlockInfo.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\ExplosionBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\GameController.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\HomeController.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\Planet.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\ShipController.cs" />
+    <Compile Include="Assets\Scripts\Helpers\BezierCurves.cs" />
+    <Compile Include="Assets\Scripts\Helpers\PolarSystem.cs" />
+    <Compile Include="Assets\Scripts\Helpers\SimpleFunctions.cs" />
+    <Compile Include="Assets\Scripts\Helpers\Utils.cs" />
+    <Compile Include="Assets\Scripts\User Interface\AlphaChanger.cs" />
+    <Compile Include="Assets\Scripts\User Interface\ChangeCanvases.cs" />
+    <Compile Include="Assets\Scripts\User Interface\MenuUIChanger.cs" />
+    <Compile Include="Assets\Scripts\User Interface\ShipCustomization.cs" />
+    <Compile Include="Assets\Scripts\User Interface\ShipUIMover.cs" />
+    <Compile Include="Assets\Scripts\User Interface\SoundController.cs" />
+    <Compile Include="Assets\Scripts\User Interface\UiMovement.cs" />
     <None Include="Assets\Materials\Sprite Shader.shader" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
