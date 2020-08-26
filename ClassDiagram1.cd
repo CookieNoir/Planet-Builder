@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="BlockInfo">
+    <Position X="7" Y="7" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACAIAACAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Gameplay\BlockInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ExplosionBehaviour">
+    <Position X="9" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Assets\Scripts\Gameplay\ExplosionBehaviour.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameController">
+    <Position X="0.5" Y="0.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>UQCBCBhgIaAAAQABAkZoAAgkQAFgCAEQQABCMAgBAME=</HashCode>
+      <FileName>Assets\Scripts\Gameplay\GameController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomeController">
+    <Position X="9.75" Y="0.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>CAQBAAAAAAAAAkBAAAAAAAAAAgAAFTABAAAAAAAEAAA=</HashCode>
+      <FileName>Assets\Scripts\Gameplay\HomeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Planet">
+    <Position X="3.5" Y="0.75" Width="3.25" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Planet.NumberOfSlots" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\Gameplay\Planet.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAEAygBBAJJCRUAAIMAAABNAQEAAlAAgADKBAMEBIA=</HashCode>
+      <FileName>Assets\Scripts\Gameplay\Planet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShipController">
+    <Position X="7" Y="0.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>BARAAAAACCEgAAREAAhAAAAAACACEQAAlAAIBCAABAA=</HashCode>
+      <FileName>Assets\Scripts\Gameplay\ShipController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BezierCurves">
+    <Position X="3.25" Y="13.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Helpers\BezierCurves.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PolarSystem">
+    <Position X="5.5" Y="13.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Helpers\PolarSystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimpleFunctions">
+    <Position X="0.5" Y="13.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAgAAAAAAAAAEAAAAAAAAAAAAAAAAAgAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Helpers\SimpleFunctions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Utils">
+    <Position X="7.5" Y="13.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Helpers\Utils.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlphaChanger">
+    <Position X="6.5" Y="16.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAEAABAEAAAkAAAAAAAIIAAAQAAAAQCIAAAAAMA=</HashCode>
+      <FileName>Assets\Scripts\User Interface\AlphaChanger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChangeCanvases">
+    <Position X="7.75" Y="21.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAACAAgAACAAAAAAAAAAAAgAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\User Interface\ChangeCanvases.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Hint">
+    <Position X="10" Y="16.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAGARQAAAkAAAAAAgAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\User Interface\Hint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MenuUIChanger">
+    <Position X="3.25" Y="16.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAQAFAMAACAAAAAQAiAAAgAgAAAAEAAAAAEAiABAgAE=</HashCode>
+      <FileName>Assets\Scripts\User Interface\MenuUIChanger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShipCustomization">
+    <Position X="3.25" Y="21.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAQAgAAAgAABAAAIAAAgEAAAAAAAIAIIAA=</HashCode>
+      <FileName>Assets\Scripts\User Interface\ShipCustomization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShipUIMover">
+    <Position X="0.75" Y="24.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABACAAAAAAAAAIAAAAIAAAACAAAAAEAAAEAIA=</HashCode>
+      <FileName>Assets\Scripts\User Interface\ShipUIMover.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SoundController">
+    <Position X="5.75" Y="21.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAABAACAAAAAAIQAAAAgAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\User Interface\SoundController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UiMovement">
+    <Position X="0.5" Y="16.5" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="UiMovement.lines" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\User Interface\UiMovement.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="UiMovement.functions" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\User Interface\UiMovement.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Delegate Name="UiMovement.movingFunc" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\User Interface\UiMovement.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAEAgAAEQCoEABEAAgAAAEACAAAIAIEAAAAEAQAiAUA=</HashCode>
+      <FileName>Assets\Scripts\User Interface\UiMovement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

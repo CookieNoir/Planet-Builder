@@ -12,8 +12,6 @@ public class MenuUIChanger : MonoBehaviour
 
     private bool _customizing;
     private bool _canChange;
-    private bool _isPlaying;
-    private bool _isPaused;
     private IEnumerator _moveui;
     private IEnumerator _alphaChanger;
     private IEnumerator _startGame;
@@ -22,8 +20,6 @@ public class MenuUIChanger : MonoBehaviour
     {
         _customizing = false;
         _canChange = true;
-        _isPlaying = false;
-        _isPaused = false;
         _moveui = moveui();
         _alphaChanger = shipAlphaChanger.ChangeAlpha();
         _startGame = startGame();
@@ -45,7 +41,6 @@ public class MenuUIChanger : MonoBehaviour
     {
         if (!_customizing&&_canChange)
         {
-            _isPlaying = true;
             _canChange = false;
             StopCoroutine(_startGame);
             _startGame = startGame();

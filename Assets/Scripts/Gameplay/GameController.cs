@@ -45,7 +45,6 @@ public class GameController : MonoBehaviour
     private IEnumerator _restart;
     private IEnumerator _changeAlpha;
     private bool _restarting;
-    private bool _changingLevel;
     private int _blocksLanding;
 
     void Start()
@@ -63,7 +62,6 @@ public class GameController : MonoBehaviour
         _changeAlpha = whiteScreen.ChangeAlpha(SimpleFunctions.SmoothStep, true);
         StartCoroutine(_changeAlpha);
         _restarting = false;
-        _changingLevel = false;
         gameCamera.orthographicSize = cameraSizeAtStart;
     }
 
@@ -188,7 +186,6 @@ public class GameController : MonoBehaviour
 
     private void changeLevel()
     {
-        _changingLevel = true;
         level++;
         _completedLevelsCount++;
         PlayerPrefs.SetInt("Level", level);
@@ -251,7 +248,6 @@ public class GameController : MonoBehaviour
         _zoomAtStart = toMenuButton.ChangeAlpha(); // Исп-тся _zoomAtStart вместо _changeAlpha, т.к. в момент перехода она однозначно свободна
         StartCoroutine(_zoomAtStart);
         trail.SetActive(false);
-        _changingLevel = false;
     }
 
     private void setNextPlanet()
