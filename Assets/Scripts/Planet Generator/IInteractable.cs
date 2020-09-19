@@ -1,5 +1,5 @@
 ﻿public interface IInteractable
 {
-    void Deploy(in PlanetTest planet, in float angle);
+    void Deploy(in Planet planet, in float angle);
     void Interact();
 }

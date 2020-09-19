@@ -47,3 +47,13 @@ MonoBehaviour:
     m_Color: {r: 0.254717, g: 0.21845369, b: 0.15499288, a: 1}
   - m_Name: Space Darkness
     m_Color: {r: 0.09019608, g: 0.078431375, b: 0.12156863, a: 1}
+  - m_Name: Swamp 1
+    m_Color: {r: 0.54901963, g: 0.6745098, b: 0.42352942, a: 0.3137255}
+  - m_Name: Swamp 2
+    m_Color: {r: 0.4, g: 0.40392157, b: 0.31764707, a: 0.36862746}
+  - m_Name: Water Inside
+    m_Color: {r: 0.0729051, g: 0.45400003, b: 0.34795618, a: 1}
+  - m_Name: Swamp Green Inside
+    m_Color: {r: 0.4794186, g: 0.589, b: 0.3698372, a: 1}
+  - m_Name: Swamp Mountain Inside
+    m_Color: {r: 0.35749513, g: 0.36099997, b: 0.2838932, a: 1}

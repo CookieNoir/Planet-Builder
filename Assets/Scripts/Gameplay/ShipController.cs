@@ -12,7 +12,7 @@ public class ShipController : MonoBehaviour
     public Color[] blocksColors;
 
     private float _speed = 60f;
-    private Planet _planet;
+    private PlanetOld _planet;
     private IEnumerator _smoothFlight;
     private IEnumerator _laserModifier;
     private bool _onPlanet = false;
@@ -104,7 +104,7 @@ public class ShipController : MonoBehaviour
         }
     }
 
-    public void ToPlanet(Planet planet, float pathLength)
+    public void ToPlanet(PlanetOld planet, float pathLength)
     {
         Vector3 endPoint = SetPlanet(planet);
         Vector3 startPoint = Utils.StartingPointOfTheTangentEquation(planet.transform.position, endPoint, planet.planetAtmosphereRadius, pathLength, planet.isClockwise);
@@ -125,7 +125,7 @@ public class ShipController : MonoBehaviour
         StartCoroutine(_smoothFlight);
     }
 
-    public Vector3 SetPlanet(Planet planet)
+    public Vector3 SetPlanet(PlanetOld planet)
     {
         _planet = planet;
         _speed = planet.shipSpeed;

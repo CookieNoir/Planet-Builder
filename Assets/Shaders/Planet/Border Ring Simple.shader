@@ -2,7 +2,9 @@
 {
     Properties
     {
-        _MainTex ("Texture Mask (G)", 2D) = "white" {}
+        _MainTex ("Texture Mask (R)", 2D) = "white" {}
+		_Color ("Solid Color", color) = (1,1,1,1)
+		_Brightness ("Brightness", range(0, 1)) = 1
     }
     SubShader
     {
@@ -33,6 +35,8 @@
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
+			fixed4 _Color;
+			fixed _Brightness;
 
             v2f vert (appdata v)
             {
@@ -45,8 +49,8 @@
 
             fixed4 frag (v2f i) : SV_Target
             {
-				fixed4 col = i.color;
-				col.a *= tex2D(_MainTex, i.uv).g;
+				fixed4 col = _Brightness * i.color + (1.0 - _Brightness) * _Color;
+				col.a *= tex2D(_MainTex, i.uv).r;
                 return col;
             }
             ENDCG

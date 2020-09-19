@@ -35,7 +35,7 @@ public class GameController : MonoBehaviour
 
     public static GameController instance;
 
-    private Planet _planet;
+    private PlanetOld _planet;
     private GameObject _prevPlanet;
     private bool _levelCompleted;
     private int _completedLevelsCount; // Количество завершенных уровней в текущей игровой сессии
@@ -260,14 +260,14 @@ public class GameController : MonoBehaviour
         if (level <= staticLevelsCount)
         {
             planetObject = Instantiate(planets[level - 1], _newPlanetPosition, Quaternion.identity);
-            _planet = planetObject.GetComponent<Planet>();
+            _planet = planetObject.GetComponent<PlanetOld>();
             _planet.Create();
         }
         else
         {
             int _type = Random.Range(0, planets.Length);
             planetObject = Instantiate(planets[_type], _newPlanetPosition, Quaternion.identity);
-            _planet = planetObject.GetComponent<Planet>();
+            _planet = planetObject.GetComponent<PlanetOld>();
             _planet.Create(true);
         }
         _levelCompleted = false;

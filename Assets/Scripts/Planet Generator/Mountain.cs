@@ -2,7 +2,7 @@
 [RequireComponent(typeof(MeshFilter))]
 public class Mountain : GroundObject
 {
-    public override void Deploy(in PlanetTest planet, in float angle)
+    public override void Deploy(in Planet planet, in float angle)
     {
         segment = planet.GetSegmentByAngle(angle);
         Mesh mesh = GetComponent<MeshFilter>().mesh;

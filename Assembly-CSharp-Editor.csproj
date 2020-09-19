@@ -62,8 +62,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Editor\CustomNameDrawer.cs" />
-    <Compile Include="Assets\Editor\ReadOnlyDrawer.cs" />
+    <Compile Include="Assets\Editor\Custom Editors\CurvedTextEditor.cs" />
+    <Compile Include="Assets\Editor\Custom Editors\PlanetEditor.cs" />
+    <Compile Include="Assets\Editor\Custom Editors\TransformCustomEditor.cs" />
+    <Compile Include="Assets\Editor\Property Attributes\CustomNameDrawer.cs" />
+    <Compile Include="Assets\Editor\Property Attributes\ReadOnlyDrawer.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

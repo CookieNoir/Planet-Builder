@@ -4,7 +4,7 @@ public class GroundObject : MonoBehaviour, IInteractable
 {
     protected int segment;
 
-    public virtual void Deploy(in PlanetTest planet, in float angle)
+    public virtual void Deploy(in Planet planet, in float angle)
     {
         segment = planet.GetSegmentByAngle(angle);
     }

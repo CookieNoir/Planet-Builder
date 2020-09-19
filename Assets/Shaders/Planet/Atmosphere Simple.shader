@@ -67,7 +67,7 @@
 
 				fixed4 frag(v2f i) : COLOR
 				{
-					return lerp(_Color, clear, sqrt(i.uv.y));
+					return lerp(_Color, clear, i.uv.y * i.uv.y * (3.0 - 2.0 * i.uv.y));
 				}
 			ENDCG
 		}
